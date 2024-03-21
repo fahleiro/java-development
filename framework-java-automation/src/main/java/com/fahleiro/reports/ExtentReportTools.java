@@ -22,9 +22,13 @@ public class ExtentReportTools {
         return extent;
     }
 
-    public static void logWithScreenshot(ExtentTest test, String message, String fileName) {
-        String screenshotPath = "screenshots/" + fileName;
-        test.pass(message, MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+    public static void logTest(ExtentTest test, String message, String... fileName) {
+        if (fileName.length > 0 && fileName[0] != null && !fileName[0].isEmpty()) {
+            String screenshotPath = "screenshots/" + fileName[0];
+            test.pass(message, MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+        } else {
+            test.pass(message);
+        }
     }
 
 

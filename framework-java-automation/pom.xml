@@ -6,7 +6,7 @@
 
     <groupId>fahleiro</groupId>
     <artifactId>framework-java-automation</artifactId>
-    <version>1.2.10-BETA</version>
+    <version>1.2.14-BETA</version>
 
     <distributionManagement>
         <repository>
@@ -23,6 +23,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>fahleiro</groupId>
+            <artifactId>framework-java-core</artifactId>
+            <version>1.2.10-BETA</version>
+        </dependency>
         <dependency>
             <groupId>com.aventstack</groupId>
             <artifactId>extentreports</artifactId>

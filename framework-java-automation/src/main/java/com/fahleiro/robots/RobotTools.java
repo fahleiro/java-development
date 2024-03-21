@@ -5,9 +5,12 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.util.function.Function;
 
 public class RobotTools {
     private AppiumDriver driver;
@@ -17,33 +20,43 @@ public class RobotTools {
     }
 
 
-    public void waitElement(WebElement element, int... waitTimeSeconds) {
-        int maxTries = waitTimeSeconds.length > 0 ? waitTimeSeconds[0] / 3 : 3;
-        int tryCount = 0;
-        while (tryCount < maxTries) {
-            try {
-                if (element.isDisplayed()) {
-                    return;
-                }
-            } catch (Exception e) {
-                System.out.println("Elemento não disponível, tentando novamente...");
-            }
-            try {
-                Thread.sleep(waitTimeSeconds.length > 0 ? waitTimeSeconds[0] * 1000 : 3000);
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-            tryCount++;
+
+    public void waitElement(WebElement element, int... customWaitTimes) {
+        if (customWaitTimes.length > 0 && customWaitTimes.length != 2) {
+            throw new IllegalArgumentException("If you provide custom wait times, you must provide both the polling interval and the total wait time.");
         }
-        throw new RuntimeException("Elemento não encontrado após " + maxTries + " tentativas.");
+
+        int pollingIntervalSeconds = 3;
+        int timeoutSeconds = 30;
+
+        if (customWaitTimes.length == 2) {
+            pollingIntervalSeconds = customWaitTimes[0];
+            timeoutSeconds = customWaitTimes[1];
+        }
+
+        FluentWait<AppiumDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(timeoutSeconds))
+                .pollingEvery(Duration.ofSeconds(pollingIntervalSeconds));
+
+        wait.until(new Function<AppiumDriver, Boolean>() {
+            public Boolean apply(AppiumDriver driver) {
+                try {
+                    return element.isDisplayed();
+                } catch (Exception e) {
+                    System.out.println("The element " + element + " is not displayed, trying again.");
+                    return false;
+                }
+            }
+        });
     }
+
 
 
     public void validateElement(WebElement element) {
         try {
             waitElement(element);
             if (!element.isDisplayed()) {
-                System.out.println("Elemento não encontrado: " + element.toString());
+                System.out.println("The element " + element + " is not displayed.");
             }
         } catch (Exception e) {
             System.out.println("Erro ao validar elemento: " + e.getMessage());
@@ -61,7 +74,7 @@ public class RobotTools {
     }
 
     public File takeScreenShotAsFile(WebElement element, String fileName, String directory) throws InterruptedException {
-        waitElement (element);
+        waitElement(element);
         File screenshotDir = new File(directory);
         if (!screenshotDir.exists()) {
             screenshotDir.mkdirs();

@@ -14,11 +14,11 @@ public class MobileDriver {
     public static AppiumDriver createAndroidDriver(String appiumServerUrl, DesiredCapabilities capabilities) {
         try {
             AndroidDriver driver = new AndroidDriver(new URL(appiumServerUrl), capabilities);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30)); // Adicionar o tempo de espera
-            System.out.println("Framework de automação mobile desenvolvido por Gabriel Reinisch Faleiro");
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+            System.out.println("Creating Appium Driver");
             return driver;
         } catch (MalformedURLException var3) {
-            throw new RuntimeException("Erro ao criar o driver do Appium: URL inválida.", var3);
+            throw new RuntimeException("Error while creating Appium Driver", var3);
         }
     }
 }
