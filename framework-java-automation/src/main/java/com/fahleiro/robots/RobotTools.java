@@ -25,7 +25,6 @@ import java.util.zip.ZipOutputStream;
 public class RobotTools {
 
     private AppiumDriver driver;
-
     public RobotTools(AppiumDriver driver) {
         this.driver = driver;
     }
@@ -80,7 +79,7 @@ public class RobotTools {
         element.sendKeys(text);
     }
 
-    public File takeScreenShotAsFile(WebElement element, String fileName, String directory) throws InterruptedException {
+    public File takeScreenShot(WebElement element, String fileName, String directory) throws InterruptedException {
         waitElement(element);
         File screenshotDir = new File(directory);
         if (!screenshotDir.exists()) {
@@ -102,7 +101,7 @@ public class RobotTools {
         element.clear ();
     }
 
-    public void createZip(String folderPathToZip, String folderToZip, String... savePathZip) {
+    public static void createZip(String folderPathToZip, String folderToZip, String... savePathZip) {
         if (folderPathToZip == null || folderPathToZip.isEmpty() ||
                 folderToZip == null || folderToZip.isEmpty()) {
             System.out.println("The name and path of folder must be provided");
@@ -135,7 +134,7 @@ public class RobotTools {
         }
     }
 
-    public void sendMail(String host, String mail, String password, int port, String[] recipients,
+    public static void sendMail(String host, String mail, String password, int port, String[] recipients,
                          String subject, String mailBodyPath, String attachmentPath) {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");

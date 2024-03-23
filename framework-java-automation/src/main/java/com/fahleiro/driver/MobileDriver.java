@@ -8,8 +8,6 @@ import java.time.Duration;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class MobileDriver {
-    public MobileDriver() {
-    }
 
     public static AppiumDriver createAndroidDriver(String appiumServerUrl, DesiredCapabilities capabilities) {
         try {
@@ -21,4 +19,5 @@ public class MobileDriver {
             throw new RuntimeException("Error while creating Appium Driver", var3);
         }
     }
+
 }

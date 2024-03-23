@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.function.Consumer;
 
 public class QueryTools {
-    public QueryTools() {
-    }
 
     public static void executeQuery(Connection connection, String query, Consumer<ResultSet> resultSetConsumer) throws SQLException {
         PreparedStatement statement = null;
@@ -30,4 +28,5 @@ public class QueryTools {
             }
         }
     }
+
 }
