@@ -102,34 +102,34 @@ public class RobotTools {
         element.clear ();
     }
 
-    public void createZip(String caminhoDoFolder, String nomeDoFolder, String... caminhoPersonalizado) {
-        if (caminhoDoFolder == null || caminhoDoFolder.isEmpty() ||
-                nomeDoFolder == null || nomeDoFolder.isEmpty()) {
+    public void createZip(String folderPathToZip, String folderToZip, String... savePathZip) {
+        if (folderPathToZip == null || folderPathToZip.isEmpty() ||
+                folderToZip == null || folderToZip.isEmpty()) {
             System.out.println("The name and path of folder must be provided");
             return;
         }
 
         try {
-            File destino = (caminhoPersonalizado.length > 0 && caminhoPersonalizado[0] != null && !caminhoPersonalizado[0].isEmpty()) ?
-                    new File(caminhoPersonalizado[0]) : new File("src/test/zip");
+            File destiny = (savePathZip.length > 0 && savePathZip[0] != null && !savePathZip[0].isEmpty()) ?
+                    new File(savePathZip[0]) : new File("src/test/zip");
 
-            if (!destino.exists()) {
-                destino.mkdirs();
+            if (!destiny.exists()) {
+                destiny.mkdirs();
             }
 
-            File folder = new File(caminhoDoFolder, nomeDoFolder);
+            File folder = new File(folderPathToZip, folderToZip);
             if (!folder.exists()) {
                 System.out.println("The especified folder does not exist");
                 return;
             }
 
-            FileOutputStream fos = new FileOutputStream(destino.getPath() + File.separator + nomeDoFolder + ".zip");
+            FileOutputStream fos = new FileOutputStream(destiny.getPath() + File.separator + folderToZip + ".zip");
             ZipOutputStream zos = new ZipOutputStream(fos);
             RobotUtils.zipFolder(folder, folder.getName(), zos);
             zos.close();
             fos.close();
 
-            System.out.println("Folder zipped successfully. Zipped file save at: " + destino.getPath() + File.separator + nomeDoFolder + ".zip");
+            System.out.println("Folder zipped successfully. Zipped file save at: " + destiny.getPath() + File.separator + folderToZip + ".zip");
         } catch (IOException e) {
             e.printStackTrace();
         }
