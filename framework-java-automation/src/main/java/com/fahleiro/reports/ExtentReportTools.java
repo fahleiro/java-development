@@ -9,21 +9,40 @@ import java.io.File;
 
 public class ExtentReportTools {
 
-    public static ExtentReports createExtentReports(String filename, String directory) {
-        File reportDir = new File (directory);
-        if (!reportDir.exists ()) {
-            reportDir.mkdirs ();
-        }
+    private static ExtentReports extent;
 
-        String filePath = directory + File.separator + filename;
-        ExtentSparkReporter spark = new ExtentSparkReporter(filePath);
-        ExtentReports extent = new ExtentReports();
-        extent.attachReporter(spark);
+    public static ExtentReports createExtentReport(String filename, String directory) {
+        if (extent == null) {
+            File reportDir = new File(directory);
+            if (!reportDir.exists()) {
+                reportDir.mkdirs();
+            }
+
+            String filePath = directory + File.separator + filename;
+            ExtentSparkReporter spark = new ExtentSparkReporter(filePath);
+            extent = new ExtentReports();
+            extent.attachReporter(spark);
+        }
         return extent;
     }
 
+    public static void flushExtentReport() {
+        if (extent != null) {
+            extent.flush();
+        }
+    }
+
+    public static ExtentReports getExtentReport() {
+        return extent;
+    }
+
+    public static ExtentTest createTest(String name, String description) {
+        ExtentTest test = extent.createTest(name, description);
+        return test;
+    }
+
     public static void logTest(ExtentTest test, String message, String... fileName) {
-        if (fileName.length > 0 && fileName[0] != null && !fileName[0].isEmpty()) {
+        if (fileName.length > 0 && fileName[0] != null && !fileName[0].trim().isEmpty()) {
             String screenshotPath = "screenshots/" + fileName[0];
             test.pass(message, MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
         } else {
