@@ -7,7 +7,7 @@
 
     <groupId>fahleiro</groupId>
     <artifactId>framework-java-automation</artifactId>
-    <version>1.4.3-BETA</version>
+    <version>1.4.4-BETA</version>
 
     <distributionManagement>
         <repository>
@@ -52,7 +52,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.18.1</version>
+            <version>4.19.0</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
