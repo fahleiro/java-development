@@ -9,15 +9,14 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class MobileDriver {
 
-    public static AppiumDriver createAndroidDriver(String appiumServerUrl, DesiredCapabilities capabilities) {
-        try {
-            AndroidDriver driver = new AndroidDriver(new URL(appiumServerUrl), capabilities);
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-            System.out.println("Creating Appium Driver");
-            return driver;
-        } catch (MalformedURLException var3) {
-            throw new RuntimeException("Error while creating Appium Driver", var3);
-        }
+    public static AppiumDriver startAppium(String appiumServerIp, int appiumServerPort, DesiredCapabilities capabilities, boolean detailedErrors, boolean redirectAppiumPort) {
+        System.out.println("Starting Appium");
+        MobileDriverUtils.startSession(appiumServerIp, appiumServerPort, capabilities, detailedErrors, redirectAppiumPort);
+        return MobileDriverUtils.driver;
+    }
+
+    public static void stopAppium(){
+        MobileDriverUtils.stopSession();
     }
 
 }

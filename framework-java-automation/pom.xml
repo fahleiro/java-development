@@ -7,7 +7,7 @@
 
     <groupId>fahleiro</groupId>
     <artifactId>framework-java-automation</artifactId>
-    <version>1.4.4-BETA</version>
+    <version>1.5.0-BETA</version>
 
     <distributionManagement>
         <repository>
