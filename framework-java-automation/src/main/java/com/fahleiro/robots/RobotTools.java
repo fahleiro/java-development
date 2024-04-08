@@ -1,10 +1,9 @@
 package com.fahleiro.robots;
-
-import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.WebDriver;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import javax.mail.*;
@@ -24,8 +23,8 @@ import java.util.zip.ZipOutputStream;
 
 public class RobotTools {
 
-    private AppiumDriver driver;
-    public RobotTools(AppiumDriver driver) {
+    private WebDriver driver;
+    public RobotTools(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -42,12 +41,12 @@ public class RobotTools {
             timeoutSeconds = customWaitTimes[1];
         }
 
-        FluentWait<AppiumDriver> wait = new FluentWait<>(driver)
+        FluentWait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(timeoutSeconds))
                 .pollingEvery(Duration.ofSeconds(pollingIntervalSeconds));
 
-        wait.until(new Function<AppiumDriver, Boolean>() {
-            public Boolean apply(AppiumDriver driver) {
+        wait.until(new Function<WebDriver, Boolean>() {
+            public Boolean apply(WebDriver driver) {
                 try {
                     return element.isDisplayed();
                 } catch (Exception e) {
@@ -135,7 +134,7 @@ public class RobotTools {
     }
 
     public static void sendMail(String host, String mail, String password, int port, String[] recipients,
-                         String subject, String mailBodyPath, String attachmentPath) {
+                                String subject, String mailBodyPath, String attachmentPath) {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");

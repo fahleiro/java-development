@@ -7,7 +7,7 @@ import java.net.URL;
 import java.time.Duration;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-public class MobileDriver {
+public class MobileDriverTools {
 
     public static AppiumDriver startAppium(String appiumServerIp, int appiumServerPort, DesiredCapabilities capabilities, boolean detailedErrors, boolean redirectAppiumPort) {
         System.out.println("Starting Appium");
