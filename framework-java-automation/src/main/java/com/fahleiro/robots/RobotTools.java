@@ -69,6 +69,16 @@ public class RobotTools {
         }
     }
 
+    public boolean isDisplayed(WebElement element) {
+        try {
+            return element.isDisplayed();
+        } catch (Exception e) {
+            System.out.println("Erro ao verificar se o elemento está visível: " + e.getMessage());
+            return false;
+        }
+    }
+
+
 
     public void clickElement(WebElement element) {
         waitElement(element);
