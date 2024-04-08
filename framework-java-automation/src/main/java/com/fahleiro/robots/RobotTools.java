@@ -57,7 +57,7 @@ public class RobotTools {
         });
     }
 
-    public void validateElement(WebElement element) {
+    public void validateElement(WebElement element) throws Exception {
         try {
             waitElement(element);
             if (!element.isDisplayed()) {
@@ -65,8 +65,10 @@ public class RobotTools {
             }
         } catch (Exception e) {
             System.out.println("Erro ao validar elemento: " + e.getMessage());
+            throw e;
         }
     }
+
 
     public void clickElement(WebElement element) {
         waitElement(element);
