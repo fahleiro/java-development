@@ -78,8 +78,7 @@ public class RobotTools {
         element.sendKeys(text);
     }
 
-    public File takeScreenShot(WebElement element, String fileName, String directory) throws InterruptedException {
-        waitElement(element);
+    public File takeScreenShot(String fileName, String directory) throws InterruptedException {
         File screenshotDir = new File(directory);
         if (!screenshotDir.exists()) {
             screenshotDir.mkdirs();
@@ -93,6 +92,11 @@ public class RobotTools {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public File takeScreenShot(String fileName, String directory, WebElement element) throws InterruptedException {
+        waitElement(element);
+        return takeScreenShot(fileName, directory);
     }
 
     public void clear (WebElement element) {
