@@ -11,11 +11,19 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.security.cert.X509Certificate;
 import java.time.Duration;
 import java.util.Properties;
 import java.util.function.Function;
@@ -64,7 +72,7 @@ public class RobotTools {
                 System.out.println("The element " + element + " is not displayed.");
             }
         } catch (Exception e) {
-            System.out.println("Erro ao validar elemento: " + e.getMessage());
+            System.out.println("Error validating element" +element +": " + e.getMessage());
             throw e;
         }
     }
@@ -73,7 +81,7 @@ public class RobotTools {
         try {
             return element.isDisplayed();
         } catch (Exception e) {
-            System.out.println("Erro ao verificar se o elemento está visível: " + e.getMessage());
+            System.out.println("The element " + element + "is not visible: " + e.getMessage());
             return false;
         }
     }
@@ -205,6 +213,57 @@ public class RobotTools {
             }
         } catch (MessagingException | IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void sendEndpoint(String sendType, String content, String contentType, String endPoint, boolean trustCertificate) {
+        if (trustCertificate) {
+            try {
+                TrustManager[] trustAllCerts = new TrustManager[]{
+                        new X509TrustManager () {
+                            public X509Certificate[] getAcceptedIssuers() {
+                                return null;
+                            }
+
+                            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                            }
+
+                            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                            }
+                        }
+                };
+
+                SSLContext sc = SSLContext.getInstance("TLS");
+                sc.init(null, trustAllCerts, new java.security.SecureRandom());
+                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            } catch (Exception e) {
+                System.err.println("Error configuring the trust manager: " + e.getMessage());
+                return;
+            }
+        }
+
+        try {
+            URL url = new URL(endPoint);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod(sendType);
+            connection.setRequestProperty("Content-Type", contentType);
+            connection.setDoOutput(true);
+
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] bytes = content.getBytes(StandardCharsets.UTF_8);
+                os.write(bytes, 0, bytes.length);
+            }
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                System.out.println(sendType + " request successful.");
+            } else {
+                System.err.println(sendType + " request failed with response code: " + responseCode);
+            }
+
+            connection.disconnect();
+        } catch (Exception e) {
+            System.err.println("Error sending the request: " + e.getMessage());
         }
     }
 
