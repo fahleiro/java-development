@@ -46,20 +46,20 @@ public class MobileDriverUtils {
             redirectAppiumPortVar = "N";
         }
         if (portInUse) {
-            System.out.println("A porta " + appiumServerPort + " está em uso ou inacessível.");
-            System.out.println("Redirecionamento de porta ativo? " + redirectAppiumPortVar);
+            System.out.println("The port " + appiumServerPort + " is in use or inaccessible.");
+            System.out.println("Port redirection active? " + redirectAppiumPortVar);
             if (redirectAppiumPort) {
                 int newPort = findAvailablePort(appiumServerIp, appiumServerPort);
                 if (newPort != -1) {
-                    System.out.println("Redirecionando para porta alternativa: " + newPort);
+                    System.out.println("Redirecting to alternate port: " + newPort);
                     appiumServerPort = newPort;
                 } else {
-                    System.out.println("Não foi possível encontrar uma porta alternativa disponível. Encerrando a sessão.");
+                    System.out.println("Unable to find an available alternate port. Closing the session");
                     return;
                 }
             }
         } else {
-            System.out.println("A porta " + appiumServerPort + " está disponível para uso.");
+            System.out.println("The port " + appiumServerPort + " is available for use.");
         }
 
 
@@ -80,10 +80,10 @@ public class MobileDriverUtils {
             String localIpAddress = localHost.getHostAddress();
 
             if (appiumServerIp.equals(localIpAddress)) {
-                System.out.println("IP informado local, iniciando servidor.");
+                System.out.println("Local IP address provided, starting server");
                 appiumService.start();
             } else {
-                System.out.println("IP informado é diferente dos disponíveis local, iniciando sessão em appium server remote.");
+                System.out.println("Provided IP address is different from available local addresses, starting session on remote appium server");
             }
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -94,7 +94,7 @@ public class MobileDriverUtils {
 
 
         String finalAppiumUrl = appiumService.getUrl().toString();
-        System.out.println("Sessão do Appium iniciada com sucesso em: " + finalAppiumUrl);
+        System.out.println("Appium session started successfully at: " + finalAppiumUrl);
     }
 
     public static void stopSession() {
