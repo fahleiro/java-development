@@ -36,15 +36,25 @@ jobs:
       run: npm install -g appium
 
     - name: Install UiAutomator2
-      run: appium driver install uiautomator2      
-
-    - name: Create Android SDK dir
-      run: mkdir -p ~/Android/Sdk
+      run: appium driver install uiautomator2
 
     - name: List home directory
       run: cd && ls
 
+    - name: Curl cmdline-tools from Android.rar
+      run: cd && curl -o sdk-tools-linux.zip https://github.com/fahleiro/actions/releases/download/android/Android.rar
+
+    - name: List home directory after curl cmdline-tools
+      run: cd && ls
       
+    - name: Unzip cmdline-tools > 
+      run: cd && unzip Android.rar
+
+    - name: List directories after unzip Android.rar
+      run: find ~/Android/Sdk/cmdline-tools/latest -type d
+
+              
+
 
     - name: Install Android SDK
       run: |
@@ -56,8 +66,7 @@ jobs:
         echo $PATH
         mkdir -p ~/Android/Sdk
         cd
-        curl -o sdk-tools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip?hl=pt-br
-        unzip sdk-tools-linux.zip -d ~/Android/Sdk
+        
         cd ~/Android/Sdk/cmdline-tools/bin
         sdkmanager --install "platform-tools"
         sdkmanager --install "emulator"
