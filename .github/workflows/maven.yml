@@ -53,17 +53,22 @@ jobs:
     - name: List home directory after decompress Android.tar.gz
       run: cd ~ && ls
       
-
     - name: List directories after unzip Android.rar
       run: find ~/Android/Sdk/cmdline-tools/latest -type d
+
+    - name: Set Android environments path system
+      run: |
+        echo 'export ANDROID_HOME=~/Android/Sdk' >>~/.bashrc
+        echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME' >>~/.bashrc
+        
+    - name: List Android environments path system
+      run: echo $ANDROID_HOME && echo $ANDROID_SDK_ROOT
 
               
 
 
     - name: Install Android SDK
       run: |
-        echo 'export ANDROID_HOME=$HOME/Android/Sdk' >>~/.bashrc
-        echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME' >>~/.bashrc
         echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/build-tools/30.0.3' >>~/.bashrc
         source ~/.bashrc
         echo $ANDROID_HOME
