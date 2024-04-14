@@ -22,6 +22,13 @@
         </repository>
     </repositories>
 
+    <server>
+    <id>github</id>
+    <username>${env.GITHUB_ACTOR}</username>
+    <password>${env.GH_PACKAGE_PAT}</password>
+    </server>
+
+
     <dependencies>
         <dependency>
             <groupId>fahleiro</groupId>
