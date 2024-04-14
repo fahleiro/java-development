@@ -36,8 +36,8 @@ jobs:
               <servers>
                 <server>
                   <id>github</id>
-                  <username>$GH_ACTOR</username>
-                  <password>$GH_TOKEN</password>
+                  <username>${{secrets.GH_ACTOR}}</username>
+                  <password>${{secrets.GH_PTOKEN}</password>
                 </server>
               </servers>
             </settings>" > $HOME/.m2/settings.xml
