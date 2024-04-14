@@ -46,9 +46,12 @@ jobs:
 
     - name: List home directory after curl cmdline-tools
       run: cd && ls
+
+    - name: Download unrar
+      run: apt-get install unrar
       
-    - name: Unzip cmdline-tools > 
-      run: cd && unzip Android.rar
+    - name: unrar cmdline-tools > 
+      run: unrar x Android.rar
 
     - name: List directories after unzip Android.rar
       run: find ~/Android/Sdk/cmdline-tools/latest -type d
