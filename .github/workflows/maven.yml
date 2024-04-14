@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Print settings.xml
+      run: cat $HOME/.m2/settings.xml
+  
     - name: Checkout code to mobile-automate-dev
       uses: actions/checkout@v4.1.2
       with:
