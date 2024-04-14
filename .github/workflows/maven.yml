@@ -50,16 +50,14 @@ jobs:
       with:
         node-version: '18'
 
-
-
     - name: Install Appium
       run: npm install -g appium
 
-    - name: Start Appium server
-      run: appium &
+    - name: Install UiAutomator2
+      run: appium driver install uiautomator2
 
     - name: Start Appium server
-      run: appium driver install uiautomator2
+      run: appium &
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
