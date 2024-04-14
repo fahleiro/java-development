@@ -45,6 +45,17 @@ jobs:
     - name: Print settings.xml
       run: cat $HOME/.m2/settings.xml  
 
+    - name: Install Node.js and npm
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Appium
+      run: npm install -g appium
+
+    - name: Start Appium server
+      run: appium &
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
