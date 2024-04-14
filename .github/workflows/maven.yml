@@ -42,16 +42,13 @@ jobs:
       run: cd && ls
 
     - name: Curl cmdline-tools from Android.rar
-      run: cd && curl -O -L https://github.com/fahleiro/actions/releases/download/android/Android.rar
+      run: cd && curl -O -L https://github.com/fahleiro/actions/releases/download/android/Android.zip
 
     - name: List home directory after curl cmdline-tools
       run: cd && ls
-
-    - name: Download unrar
-      run: apt-get install unrar
       
-    - name: unrar cmdline-tools > 
-      run: unrar x Android.rar
+    - name: unzip cmdline-tools > 
+      run: unzip Android.zip
 
     - name: List directories after unzip Android.rar
       run: find ~/Android/Sdk/cmdline-tools/latest -type d
