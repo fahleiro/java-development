@@ -38,8 +38,16 @@ public class MobileDriverUtils {
         return -1;
     }
 
-    public static void startSession(String appiumServerIp, int appiumServerPort, DesiredCapabilities capabilities, boolean detailedErrors, boolean redirectAppiumPort) {
-        boolean portInUse = isPortInUse(appiumServerIp, appiumServerPort);
+    public static void startSession(int appiumServerPort, DesiredCapabilities capabilities, boolean detailedErrors, boolean redirectAppiumPort, String... appiumServerIp) {
+        String ipAddress;
+        if (appiumServerIp == null || appiumServerIp.length == 0 || appiumServerIp[0] == null) {
+            System.out.println("AppiumServerIP not provided, starting local server");
+            ipAddress = getLocalIpAddress();
+        } else {
+            ipAddress = appiumServerIp[0];
+        }
+
+        boolean portInUse = isPortInUse(ipAddress , appiumServerPort);
         if (redirectAppiumPort){
             redirectAppiumPortVar = "Y";
         } else {
@@ -49,7 +57,7 @@ public class MobileDriverUtils {
             System.out.println("The port " + appiumServerPort + " is in use or inaccessible.");
             System.out.println("Port redirection active? " + redirectAppiumPortVar);
             if (redirectAppiumPort) {
-                int newPort = findAvailablePort(appiumServerIp, appiumServerPort);
+                int newPort = findAvailablePort(ipAddress , appiumServerPort);
                 if (newPort != -1) {
                     System.out.println("Redirecting to alternate port: " + newPort);
                     appiumServerPort = newPort;
@@ -65,7 +73,7 @@ public class MobileDriverUtils {
 
         AppiumServiceBuilder appiumServiceBuilderbuilder = new AppiumServiceBuilder()
                 .usingPort(appiumServerPort)
-                .withIPAddress(appiumServerIp);
+                .withIPAddress(ipAddress);
 
         if (detailedErrors) {
             appiumServiceBuilderbuilder.withArgument(GeneralServerFlag.LOG_LEVEL, "debug");
@@ -79,7 +87,7 @@ public class MobileDriverUtils {
             InetAddress localHost = InetAddress.getLocalHost();
             String localIpAddress = localHost.getHostAddress();
 
-            if (appiumServerIp.equals(localIpAddress)) {
+            if (ipAddress .equals(localIpAddress)) {
                 System.out.println("Local IP address provided, starting server");
                 appiumService.start();
             } else {
@@ -95,6 +103,15 @@ public class MobileDriverUtils {
 
         String finalAppiumUrl = appiumService.getUrl().toString();
         System.out.println("Appium session started successfully at: " + finalAppiumUrl);
+    }
+
+    private static String getLocalIpAddress() {
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static void stopSession() {
