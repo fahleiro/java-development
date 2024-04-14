@@ -48,8 +48,10 @@ jobs:
       run: cd ~ && ls
       
     - name: unzip cmdline-tools > 
-      run: tar -xzf ~/Android.tar.gz
-
+      run: tar -xzf ~/Android.tar.gz ~
+      
+    - name: List home directory after decompress Android.tar.gz
+      run: cd ~ && ls
       
 
     - name: List directories after unzip Android.rar
