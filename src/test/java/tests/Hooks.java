@@ -1,6 +1,6 @@
 package tests;
 
-import com.fahleiro.driver.MobileDriver;
+import com.fahleiro.driver.MobileDriverTools;
 import com.fahleiro.robots.RobotTools;
 import io.appium.java_client.AppiumDriver;
 import org.testng.annotations.AfterSuite;
@@ -15,23 +15,23 @@ public class Hooks {
 
     @BeforeSuite
     public static void before() {
-        driver = MobileDriver.createAndroidDriver(appiumUrl, appiumCaps());
+        driver = MobileDriverTools.startAppium(null, appiumPort, appiumCaps (), true, false );
         String directoryExtentCriado = "src/test/java/report/";
-        extent2.createExtentReport("Report.html", directoryExtentCriado);
+        //extent2.createExtentReport("Report.html", directoryExtentCriado);
+        System.out.println ("log to registry start of execution @BeforeSuite");
     }
 
     @AfterSuite
     public static void after() {
-        if (driver != null) {
-            driver.quit();
-        }
-        extent2.flushExtentReport();
+        MobileDriverTools.stopAppium();
 
-        RobotTools.createZip("src/test/java", "report", "src/test/resources/zip");
+        //extent2.flushExtentReport();
+
+        //RobotTools.createZip("src/test/java", "report", "src/test/resources/zip");
 
         String[] recipients = {"", ""};
         String subject = "";
         String attachmentPath = "src/test/resources/zip/report.zip";
-        RobotTools.sendMail("", "", "", 587, recipients, subject, "src/test/resources/mail/Mail.html", attachmentPath);
+        //RobotTools.sendMail("", "", "", 587, recipients, subject, "src/test/resources/mail/Mail.html", attachmentPath);
     }
 }

@@ -19,7 +19,6 @@ public class Interactions extends Page {
 
     public void methodInteraction(String user, String fileName, String directory) throws InterruptedException {
         robots.setText(element1, user);
-        robots.takeScreenShot(element1, fileName, directory);
     }
 
     public void consultarPedidos() throws SQLException, ClassNotFoundException {
