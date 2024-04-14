@@ -48,7 +48,7 @@ jobs:
       run: cd ~ && ls
       
     - name: Descomprimir Android.tar.gz
-      run: tar -xzf ~/Android.tar.gz && echo "Descompressão de Android concluída."
+      run: tar -xzf ~/Android.tar.gz -C ~ && echo "Descompressão de Android concluída."
 
     - name: List home directory after decompress Android.tar.gz
       run: cd ~ && ls
