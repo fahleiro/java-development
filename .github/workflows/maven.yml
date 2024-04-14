@@ -46,9 +46,11 @@ jobs:
       run: cat $HOME/.m2/settings.xml  
 
     - name: Install Node.js and npm
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
-        node-version: '14'
+        node-version: '18'
+
+
 
     - name: Install Appium
       run: npm install -g appium
