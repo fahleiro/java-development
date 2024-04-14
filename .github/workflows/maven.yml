@@ -27,6 +27,25 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
+    - name: Install Node.js and npm
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Appium
+      run: npm install -g appium
+
+    - name: Install UiAutomator2
+      run: appium driver install uiautomator2      
+
+    - name: Create Android SDK dir
+      run: mkdir ~/Android/Sdk
+
+    - name: List home directory
+      run: cd && ls
+
+      
+
     - name: Install Android SDK
       run: |
         echo 'export ANDROID_HOME=$HOME/Android/Sdk' >>~/.bashrc
@@ -64,16 +83,9 @@ jobs:
     - name: Print settings.xml
       run: cat $HOME/.m2/settings.xml  
 
-    - name: Install Node.js and npm
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
 
-    - name: Install Appium
-      run: npm install -g appium
 
-    - name: Install UiAutomator2
-      run: appium driver install uiautomator2
+
 
     - name: Start Appium server
       run: appium &
