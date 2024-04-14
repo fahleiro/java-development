@@ -18,7 +18,7 @@
         <dependency>
             <groupId>fahleiro</groupId>
             <artifactId>framework-java-automation</artifactId>
-            <version>1.4.3-BETA</version>
+            <version>1.8.0-BETA</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
