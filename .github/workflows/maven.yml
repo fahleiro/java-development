@@ -77,7 +77,7 @@ jobs:
         unzip sdk-tools-linux.zip -d ~/Android/Sdk
         cd ~/Android/Sdk/cmdline-tools
         mkdir latest
-        find . -maxdepth 1 -not -name "latest" -exec mv {} latest/ \;
+        mv !(latest) latest/
         cd ~/Android/Sdk
         sdkmanager --install "platform-tools"
         sdkmanager --install "emulator"
