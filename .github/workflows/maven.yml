@@ -70,6 +70,7 @@ jobs:
         echo 'export ANDROID_HOME=$HOME/Android/Sdk' >>~/.bashrc
         echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME' >>~/.bashrc
         echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/build-tools/30.0.3' >>~/.bashrc
+        export PATH="$PATH:$ANDROID_HOME/cmdline-tools/bin"
         source ~/.bashrc
         mkdir -p ~/Android/Sdk
         cd
