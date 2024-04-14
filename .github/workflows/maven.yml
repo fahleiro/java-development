@@ -29,21 +29,23 @@ jobs:
 
     - name: Install Android SDK
       run: |
-        echo 'export ANDROID_HOME=$HOME/Android/Sdk' >>~/.bashrc
+        echo 'export ANDROID_HOME=~/Android/Sdk' >>~/.bashrc
         echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME' >>~/.bashrc
-        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/tools/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/build-tools/30.0.3' >>~/.bashrc
+        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin':$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/build-tools/30.0.3' >>~/.bashrc
         source ~/.bashrc
+        echo "ANDROID_HOME is set to: $ANDROID_HOME"
+        echo "ANDROID_SDK_ROOT is set to: $ANDROID_SDK_ROOT"
+        echo "PATH is set to: $PATH"
         mkdir -p ~/Android/Sdk
-        cd ~/Android/Sdk
-        if [ ! -f cmdline-tools/tools/bin/sdkmanager ]; then
-          curl -o sdk-tools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip?hl=pt-br
-          unzip sdk-tools-linux.zip -d ~/Android/Sdk
-        fi
-        yes | cmdline-tools/tools/bin/sdkmanager --install "platform-tools"
-        yes | cmdline-tools/tools/bin/sdkmanager --install "emulator"
-        yes | cmdline-tools/tools/bin/sdkmanager "build-tools;30.0.3"
-        yes | cmdline-tools/tools/bin/sdkmanager "platforms;android-27"
-        yes | cmdline-tools/tools/bin/sdkmanager --install "system-images;android-27;google_apis_playstore;x86"
+        cd
+        curl -o sdk-tools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip?hl=pt-br
+        unzip sdk-tools-linux.zip -d ~/Android/Sdk
+        cd ~/Android/Sdk/cmdline-tools/bin
+        sdkmanager --install "platform-tools"
+        sdkmanager --install "emulator"
+        sdkmanager "build-tools;30.0.3"
+        sdkmanager "platforms;android-27"
+        sdkmanager --install "system-images;android-27;google_apis_playstore;x86"
 
     - name: Print settings.xml
       run: cat $HOME/.m2/settings.xml
