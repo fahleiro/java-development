@@ -58,9 +58,9 @@ jobs:
 
     - name: Set Android environments path system
       run: |
-        echo 'export ANDROID_HOME=~/Android/Sdk' >>~/.bashrc
-        echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME' >>~/.bashrc
-        
+        echo 'export ANDROID_HOME=$HOME/Android/Sdk' >> ~/.bashrc
+        echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME' >> ~/.bashrc
+
     - name: List Android environments path system
       run: echo $ANDROID_HOME && echo $ANDROID_SDK_ROOT
 
