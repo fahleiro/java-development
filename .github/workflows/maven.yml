@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - name: Checkout code to mobile-automate-dev
+      uses: actions/checkout@v4.1.2
       with:
-        ref: ${{ github.ref }}
+        ref: mobile-automate-dev
 
     - name: Print current branch
       run: echo "Current branch is $(git rev-parse --abbrev-ref HEAD)"
