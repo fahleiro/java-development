@@ -27,6 +27,24 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
+    - name: Install Android SDK
+      run: |
+        echo 'export ANDROID_HOME=$HOME/Android/Sdk' >>~/.bashrc
+        echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME' >>~/.bashrc
+        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/build-tools/30.0.3' >>~/.bashrc
+        export PATH="$PATH:$ANDROID_HOME/cmdline-tools/bin"
+        source ~/.bashrc
+        mkdir -p ~/Android/Sdk
+        cd
+        curl -o sdk-tools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip?hl=pt-br
+        unzip sdk-tools-linux.zip -d ~/Android/Sdk
+        cd ~/Android/Sdk
+        sdkmanager --install "platform-tools"
+        sdkmanager --install "emulator"
+        sdkmanager "build-tools;30.0.3"
+        sdkmanager "platforms;android-27"
+        sdkmanager --install "system-images;android-27;google_apis_playstore;x86"
+
     - name: Print settings.xml
       run: cat $HOME/.m2/settings.xml
 
@@ -64,24 +82,6 @@ jobs:
 
     - name: List directory contents
       run: cd && ls
-
-    - name: Install Android SDK
-      run: |
-        echo 'export ANDROID_HOME=$HOME/Android/Sdk' >>~/.bashrc
-        echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME' >>~/.bashrc
-        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/build-tools/30.0.3' >>~/.bashrc
-        export PATH="$PATH:$ANDROID_HOME/cmdline-tools/bin"
-        source ~/.bashrc
-        mkdir -p ~/Android/Sdk
-        cd
-        curl -o sdk-tools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip?hl=pt-br
-        unzip sdk-tools-linux.zip -d ~/Android/Sdk
-        cd ~/Android/Sdk/cmdline-tools
-        sdkmanager --install "platform-tools"
-        sdkmanager --install "emulator"
-        sdkmanager "build-tools;30.0.3"
-        sdkmanager "platforms;android-27"
-        sdkmanager --install "system-images;android-27;google_apis_playstore;x86"
 
     - name: Create Android Virtual Device (AVD)
       run: |
