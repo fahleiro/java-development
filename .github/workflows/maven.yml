@@ -58,6 +58,9 @@ jobs:
     - name: Start Appium server
       run: appium &
 
+    - name: Start Appium server
+      run: appium driver install uiautomator2
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
