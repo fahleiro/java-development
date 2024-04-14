@@ -76,11 +76,8 @@ jobs:
         curl -o sdk-tools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip?hl=pt-br
         unzip sdk-tools-linux.zip -d ~/Android/Sdk
         cd ~/Android/Sdk/cmdline-tools
-        echo Dir antes de criar latest
-        ls
         mkdir latest
-        echo Dir após criar latest
-        mv * latest/
+        find . -maxdepth 1 -not -name "latest" -exec mv {} latest/ \;
         cd ~/Android/Sdk
         sdkmanager --install "platform-tools"
         sdkmanager --install "emulator"
