@@ -29,13 +29,13 @@ jobs:
 
     - name: Install Android SDK
       run: |
-        echo 'export ANDROID_HOME=~/Android/Sdk' >>~/.bashrc
+        echo 'export ANDROID_HOME=$HOME/Android/Sdk' >>~/.bashrc
         echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME' >>~/.bashrc
-        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin':$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/build-tools/30.0.3' >>~/.bashrc
+        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/build-tools/30.0.3' >>~/.bashrc
+        export PATH="$PATH:$ANDROID_HOME/cmdline-tools/bin"
         source ~/.bashrc
-        echo "ANDROID_HOME is set to: $ANDROID_HOME"
-        echo "ANDROID_SDK_ROOT is set to: $ANDROID_SDK_ROOT"
-        echo "PATH is set to: $PATH"
+        echo $ANDROID_HOME
+        echo $PATH
         mkdir -p ~/Android/Sdk
         cd
         curl -o sdk-tools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip?hl=pt-br
