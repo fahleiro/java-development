@@ -45,10 +45,12 @@ jobs:
       run: cd && curl -O -L https://github.com/fahleiro/actions/releases/download/android/Android.tar.gz
 
     - name: List home directory after curl cmdline-tools
-      run: cd && ls
+      run: cd ~ && ls
       
     - name: unzip cmdline-tools > 
-      run: tar -xzf Android.tar.gz
+      run: tar -xzf ~/Android.tar.gz
+
+      
 
     - name: List directories after unzip Android.rar
       run: find ~/Android/Sdk/cmdline-tools/latest -type d
