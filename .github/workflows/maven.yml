@@ -42,7 +42,7 @@ jobs:
       run: cd && ls
 
     - name: Curl cmdline-tools from Android.rar
-      run: cd && curl https://github.com/fahleiro/actions/releases/download/android/Android.rar
+      run: cd && curl -O -L https://github.com/fahleiro/actions/releases/download/android/Android.rar
 
     - name: List home directory after curl cmdline-tools
       run: cd && ls
