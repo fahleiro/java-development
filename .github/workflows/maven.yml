@@ -64,3 +64,33 @@ jobs:
 
     - name: List directory contents
       run: cd && ls
+
+    - name: Install Android SDK
+      run: |
+        echo 'export ANDROID_HOME=$HOME/Android/Sdk' >>~/.bashrc
+        echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME' >>~/.bashrc
+        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/build-tools/30.0.3' >>~/.bashrc
+        source ~/.bashrc
+        mkdir -p ~/Android/Sdk
+        cd
+        curl -o sdk-tools-linux.zip https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip?hl=pt-br
+        unzip sdk-tools-linux.zip -d ~/Android/Sdk
+        cd ~/Android/Sdk/cmdline-tools
+        mkdir latest
+        mv * latest/
+        cd ~/Android/Sdk
+        sdkmanager --install "platform-tools"
+        sdkmanager --install "emulator"
+        sdkmanager "build-tools;30.0.3"
+        sdkmanager "platforms;android-27"
+        sdkmanager --install "system-images;android-27;google_apis_playstore;x86"
+
+    - name: Create Android Virtual Device (AVD)
+      run: |
+        avdmanager create avd -n device-1 -k "system-images;android-27;google_apis_playstore;x86" -d pixel_4
+        emulator -avd device-1 -port 5554 &
+
+    - name: Wait for emulator to start
+      run: |
+        android-wait-for-emulator
+        adb devices
