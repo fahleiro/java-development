@@ -39,7 +39,7 @@ jobs:
       run: appium driver install uiautomator2      
 
     - name: Create Android SDK dir
-      run: mkdir ~/Android/Sdk
+      run: mkdir -p ~/Android/Sdk
 
     - name: List home directory
       run: cd && ls
