@@ -74,16 +74,22 @@ jobs:
 
     - name: Create Android Virtual Device (AVD)
       run: |
+        chmod +x ~/Android/Sdk/cmdline-tools/latest/bin/avdmanager
         ~/Android/Sdk/cmdline-tools/latest/bin/avdmanager create avd -n device-name -k "system-images;android-27;google_apis_playstore;x86" -d pixel_4
+
+    - name: Run Android Virtual Device (AVD)
+      run: |
+        chmod +x ~/Android/Sdk/emulator/emulator
         ~/Android/Sdk/emulator -avd device-1 -port 5554 &
 
     - name: Validating AVD ready
       run: |
-        status=$(adb devices | grep -E 'device$' | wc -l)
+        chmod +x ~/Android/Sdk/platform-tools/adb      
+        status=$(~/Android/Sdk/platform-tools/adb devices | grep -E 'device$' | wc -l)
         while [ "$status" -eq 0 ]; do
           echo "Emulador não está online, esperando..."
           sleep 5
-          status=$(adb devices | grep -E 'device$' | wc -l)
+          status=$(~/Android/Sdk/platform-tools/adb devices | grep -E 'device$' | wc -l)
         done
         echo "Emulador está online!"
 
