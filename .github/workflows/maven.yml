@@ -76,6 +76,9 @@ jobs:
       run: |
         chmod +x ~/Android/Sdk/cmdline-tools/latest/bin/avdmanager
         ~/Android/Sdk/cmdline-tools/latest/bin/avdmanager create avd -n device-name -k "system-images;android-27;google_apis_playstore;x86" -d pixel_4
+
+    - name: List AVD
+      run: ~/Android/Sdk/cmdline-tools/latest/bin/avdmanager list avd
     
     - name: Validate AVD Creation
       run: |
