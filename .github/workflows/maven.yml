@@ -70,6 +70,23 @@ jobs:
         ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "build-tools;30.0.3"
         ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "platforms;android-27"
         ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "system-images;android-27;google_apis_playstore;x86"
+
+
+    - name: Create Android Virtual Device (AVD)
+      run: |
+        ~/Android/Sdk/cmdline-tools/latest/bin/avdmanager create avd -n device-name -k "system-images;android-27;google_apis_playstore;x86" -d pixel_4
+        ~/Android/Sdk/emulator -avd device-1 -port 5554 &
+
+    - name: Validating AVD ready
+      run: |
+        status=$(adb devices | grep -E 'device$' | wc -l)
+        while [ "$status" -eq 0 ]; do
+          echo "Emulador não está online, esperando..."
+          sleep 5
+          status=$(adb devices | grep -E 'device$' | wc -l)
+        done
+        echo "Emulador está online!"
+
         
 
     - name: Print settings.xml
@@ -103,10 +120,7 @@ jobs:
     - name: List directory contents
       run: cd && ls
 
-    - name: Create Android Virtual Device (AVD)
-      run: |
-        avdmanager create avd -n device-1 -k "system-images;android-27;google_apis_playstore;x86" -d pixel_4
-        emulator -avd device-1 -port 5554 &
+
 
     - name: Wait for emulator to start
       run: |
