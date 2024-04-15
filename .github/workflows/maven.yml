@@ -64,7 +64,9 @@ jobs:
     - name: Install platform-tools
       run: |
         chmod +x ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager
+        yes | ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --licenses
         ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "platform-tools"
+
 
 
 
