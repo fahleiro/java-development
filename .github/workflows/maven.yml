@@ -61,33 +61,16 @@ jobs:
     - name: List Android environments path system
       run: echo $ANDROID_HOME && echo $ANDROID_SDK_ROOT
       
-    - name: Install platform-tools
+    - name: Install Android dependencies
       run: |
         chmod +x ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager
         yes | ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --licenses
         ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "platform-tools"
-
-
-
-
-              
-
-
-    - name: Install Android SDK
-      run: |
-        echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$ANDROID_HOME/build-tools/30.0.3' >>~/.bashrc
-        source ~/.bashrc
-        echo $ANDROID_HOME
-        echo $PATH
-        mkdir -p ~/Android/Sdk
-        cd
+        ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "emulator"
+        ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "build-tools;30.0.3"
+        ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "platforms;android-27"
+        ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "system-images;android-27;google_apis_playstore;x86"
         
-        cd ~/Android/Sdk/cmdline-tools/bin
-        sdkmanager --install "platform-tools"
-        sdkmanager --install "emulator"
-        sdkmanager "build-tools;30.0.3"
-        sdkmanager "platforms;android-27"
-        sdkmanager --install "system-images;android-27;google_apis_playstore;x86"
 
     - name: Print settings.xml
       run: cat $HOME/.m2/settings.xml
