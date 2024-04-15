@@ -54,7 +54,7 @@ jobs:
       run: cd ~ && ls
       
     - name: List directories after unzip Android.rar
-      run: find ~/Android/Sdk/cmdline-tools/latest -type d
+      run: find ~/android/sdk/cmdline-tools/latest -type d
 
     - name: Set Android environments path system
       run: |
