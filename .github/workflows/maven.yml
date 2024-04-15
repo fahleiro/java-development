@@ -80,7 +80,7 @@ jobs:
     - name: Run Android Virtual Device (AVD)
       run: |
         chmod +x ~/Android/Sdk/emulator/emulator
-        ~/Android/Sdk/emulator -avd device-1 -port 5554 &
+        ~/Android/Sdk/emulator/emulator -avd device-1 -port 5554 &
 
     - name: Validating AVD ready
       run: |
