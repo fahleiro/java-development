@@ -79,13 +79,14 @@ jobs:
     
     - name: Validate AVD Creation
       run: |
-        status=$(~/Android/Sdk/platform-tools/adb devices | grep emulator | wc -l)
-        while [ "$status" -eq 0 ]; do
-          echo "AVD ainda não está disponível, esperando..."
-          sleep 5
-          status=$(~/Android/Sdk/platform-tools/adb devices | grep emulator | wc -l)
-        done
-        echo "AVD criado e pronto para uso!"
+        avd_list=$(/home/runner/Android/Sdk/cmdline-tools/latest/bin/avdmanager list avd)
+        if echo "$avd_list" | grep -q "device-name"; then
+          echo "AVD 'device-name' encontrado na lista de AVDs."
+        else
+          echo "AVD 'device-name' não encontrado na lista de AVDs."
+          exit 1
+        fi
+
 
 
     - name: Run Android Virtual Device (AVD)
