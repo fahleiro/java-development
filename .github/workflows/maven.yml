@@ -9,8 +9,10 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    env:
+      ANDROID_HOME: ~/Android/Sdk
+      ANDROID_SDK_ROOT: ~/Android/Sdk
 
     steps:  
     - name: Checkout code to mobile-automate-dev
@@ -54,15 +56,22 @@ jobs:
       run: cd ~ && ls
       
     - name: List directories after unzip Android.rar
-      run: find ~/android/sdk/cmdline-tools/latest -type d
+      run: find ~/Android/Sdk/cmdline-tools/latest -type d
+
+    - name: List Android environments path system
+      run: echo $ANDROID_HOME && echo $ANDROID_SDK_ROOT
+      
+
+
+
+
 
     - name: Set Android environments path system
       run: |
         echo 'export ANDROID_HOME=$HOME/Android/Sdk' >> ~/.bashrc
         echo 'export ANDROID_SDK_ROOT=$ANDROID_HOME' >> ~/.bashrc
 
-    - name: List Android environments path system
-      run: echo $ANDROID_HOME && echo $ANDROID_SDK_ROOT
+
 
               
 
