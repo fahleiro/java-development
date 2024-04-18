@@ -104,7 +104,21 @@ jobs:
     - name: Install .apk in emulator
       run: |
         cd ~/java-dev
-        ~/Android/Sdk/platform-tools/adb install app-debug.apk
+        attempt=1
+        while true; do
+          echo "Tentativa $attempt de instalar o APK..."
+          ~/Android/Sdk/platform-tools/adb install app-debug.apk
+          # Verificar se a instalação foi bem-sucedida
+          if [ $? -eq 0 ]; then
+            echo "APK instalado com sucesso."
+            break  # Saia do loop se a instalação for bem-sucedida
+          else
+            echo "Erro ao instalar o APK."
+            attempt=$((attempt+1))
+            sleep 5  # Espere um pouco antes de tentar novamente
+          fi
+        done
+
         
     - name: Run test
       run: |      
