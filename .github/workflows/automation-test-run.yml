@@ -79,9 +79,6 @@ jobs:
         done
         echo "Emulator is online!"
         echo "$status"
-    - name: Run Appium
-      run: appium &
-
 
       #specifies about project
 
