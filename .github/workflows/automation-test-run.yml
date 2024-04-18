@@ -102,9 +102,24 @@ jobs:
         cd && git clone -b mobile-automate-dev https://github.com/fahleiro/java-dev.git && ls
 
     - name: Install .apk in emulator
-      run: |      
-        ~/Android/Sdk/platform-tools/adb install ~/java-dev/app-debug.apk
+      run: |
+        cd ~/java-dev
+        while true; do
+          # Attempt to install the APK
+          ~/Android/Sdk/platform-tools/adb install app-debug.apk
+          
+          # Check the exit code of the previous command
+          if [ $? -eq 0 ]; then
+            # If the exit code is 0 (successful installation), exit the loop
+            break
+          else
+            # If the exit code is not 0 (installation failed), print an error message and try again
+            echo "Error installing the APK. Retrying..."
+            sleep 5  # Wait for 5 seconds before retrying
+          fi
+        done
 
+        
     - name: Run test
       run: |      
         cd ~/java-dev && mvn test -Dtest=Runner.java
