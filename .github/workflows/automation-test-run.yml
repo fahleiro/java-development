@@ -83,10 +83,6 @@ jobs:
         echo "Emulator is online!"
         echo "$status"
 
-    - name: Run Appium
-      run: appium &
-
-
       #specifies about project
 
     - name: Set up settings.xml
@@ -107,13 +103,17 @@ jobs:
 
     - name: Install .apk in emulator
       run: |      
-        cd ~/java-dev
-        ~/Android/Sdk/platform-tools/adb install app-debug.apk
+        ~/Android/Sdk/platform-tools/adb install ~/java-dev/app-debug.apk
 
     - name: Run test
       run: |      
-        cd ~/java-dev
-        mvn test
+        cd ~/java-dev && mvn test -Dtest=Runner.java
 
+    - name: Push project
+      run: |
+        cd ~/java-dev
+        git add .
+        git commit -m "Commit automatico após execução dos testes"
+        git push
         
         
