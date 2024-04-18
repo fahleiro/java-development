@@ -88,6 +88,6 @@ jobs:
 
     - name: Git clone
       run: |      
-        cd && git clone -b mobile-automate-dev https://github.com/fahleiro/java-dev.git
+        cd && git clone -b mobile-automate-dev https://github.com/fahleiro/java-dev.git && ls
         cd java-dev
         mvn test
