@@ -86,8 +86,34 @@ jobs:
     - name: Run Appium
       run: appium &
 
+
+      #specifies about project
+
+    - name: Set up settings.xml
+      run: |
+        echo "<settings xmlns=\"http://maven.apache.org/SETTINGS/1.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd\">
+              <servers>
+                <server>
+                  <id>github</id>
+                  <username>${{secrets.GH_ACTOR}}</username>
+                  <password>${{secrets.GH_PTOKEN}}</password>
+                </server>
+              </servers>
+            </settings>" > $HOME/.m2/settings.xml 
+
     - name: Git clone
       run: |      
         cd && git clone -b mobile-automate-dev https://github.com/fahleiro/java-dev.git && ls
-        cd java-dev
+
+    - name: Install .apk in emulator
+      run: |      
+        cd ~/java-dev
+        ~/Android/Sdk/platform-tools/adb install app-debug.apk
+
+    - name: Run test
+      run: |      
+        cd ~/java-dev
         mvn test
+
+        
+        
