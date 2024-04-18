@@ -2,8 +2,9 @@ name: Run automation tests
 
 on:
   push:
-    branches:
-      - mobile-automate-dev
+    branches: [ "mobile-automate-dev" ]
+  pull_request:
+    branches: [ "mobile-automate-dev" ]
 
 jobs:
   build:
