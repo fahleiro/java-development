@@ -85,3 +85,9 @@ jobs:
 
     - name: Run Appium
       run: appium &
+
+    - name: Git clone
+      run: |      
+        cd && git clone -b mobile-automate-dev https://github.com/fahleiro/java-dev.git
+        cd java-dev
+        mvn test
