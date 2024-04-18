@@ -1,3 +1,4 @@
+
 name: Run automation tests
 
 on:
@@ -28,11 +29,9 @@ jobs:
       run: |
         sudo apt-get install cpu-checker
         sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
-
     - name: Set chmod kvm
       run: |      
        sudo chmod o+rw /dev/kvm    
-
     - name: Install Node.js and npm
       uses: actions/setup-node@v4
       with:
@@ -59,7 +58,6 @@ jobs:
         ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "build-tools;30.0.3"
         ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "platforms;android-27"
         ~/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --install "system-images;android-30;default;x86_64"
-
     - name: Create Android Virtual Device (AVD)
       run: |
         chmod +x ~/Android/Sdk/cmdline-tools/latest/bin/avdmanager
@@ -70,7 +68,6 @@ jobs:
         chmod +x ~/Android/Sdk/emulator/emulator
         chmod +x ~/Android/Sdk/emulator
         ~/Android/Sdk/emulator/emulator -avd device-name -port 5554 -no-window -no-audio -no-boot-anim &
-
     - name: Validating AVD ready
       run: |
         chmod +x ~/Android/Sdk/platform-tools/adb      
@@ -82,6 +79,9 @@ jobs:
         done
         echo "Emulator is online!"
         echo "$status"
+    - name: Run Appium
+      run: appium &
+
 
       #specifies about project
 
@@ -96,39 +96,14 @@ jobs:
                 </server>
               </servers>
             </settings>" > $HOME/.m2/settings.xml 
-
     - name: Git clone
       run: |      
         cd && git clone -b mobile-automate-dev https://github.com/fahleiro/java-dev.git && ls
-
     - name: Install .apk in emulator
-      run: |
+      run: |      
         cd ~/java-dev
-        attempt=1
-        while true; do
-          echo "Tentativa $attempt de instalar o APK..."
-          ~/Android/Sdk/platform-tools/adb install app-debug.apk
-          # Verificar se a instalação foi bem-sucedida
-          if [ $? -eq 0 ]; then
-            echo "APK instalado com sucesso."
-            break  # Saia do loop se a instalação for bem-sucedida
-          else
-            echo "Erro ao instalar o APK."
-            attempt=$((attempt+1))
-            sleep 5  # Espere um pouco antes de tentar novamente
-          fi
-        done
-
-        
+        ~/Android/Sdk/platform-tools/adb install app-debug.apk
     - name: Run test
       run: |      
-        cd ~/java-dev && mvn test -Dtest=Runner.java
-
-    - name: Push project
-      run: |
         cd ~/java-dev
-        git add .
-        git commit -m "Commit automatico após execução dos testes"
-        git push
-        
-        
+        mvn test
