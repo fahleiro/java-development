@@ -17,8 +17,9 @@ public class Interactions extends Page {
         PageFactory.initElements(new AppiumFieldDecorator (driver), this);
     }
 
-    public void methodInteraction(String user, String fileName, String directory) throws InterruptedException {
-        robots.setText(element1, user);
+    public void methodInteraction(String user, String failenamess, String pathss) throws InterruptedException {
+        robots.setText(usernameLabel, user);
+        robots.takeScreenShot (failenamess, pathss );
     }
 
     public void consultarPedidos() throws SQLException, ClassNotFoundException {

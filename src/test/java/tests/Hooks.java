@@ -16,8 +16,8 @@ public class Hooks {
     @BeforeSuite
     public static void before() {
         driver = MobileDriverTools.startAppium(null, appiumPort, appiumCaps (), true, false );
-        String directoryExtentCriado = "src/test/java/report/";
-        //extent2.createExtentReport("Report.html", directoryExtentCriado);
+        String directoryExtentCriado = "src/test/report/";
+        extent2.createExtentReport("Report.html", directoryExtentCriado);
         System.out.println ("log to registry start of execution @BeforeSuite");
     }
 
@@ -25,7 +25,7 @@ public class Hooks {
     public static void after() {
         MobileDriverTools.stopAppium();
 
-        //extent2.flushExtentReport();
+        extent2.flushExtentReport();
 
         //RobotTools.createZip("src/test/java", "report", "src/test/resources/zip");
 
