@@ -1,4 +1,3 @@
-
 name: Run automation tests
 
 on:
@@ -106,4 +105,9 @@ jobs:
           echo "Failed to install. Retrying..."
           sleep 5
         done
+
+    - name: Run tests
+      run: |
+        cd ~/java-dev && mvn test -Dtest=Runner.java
+
     
