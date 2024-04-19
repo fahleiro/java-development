@@ -102,14 +102,8 @@ jobs:
             </settings>" > $HOME/.m2/settings.xml 
             
     - name: Git clone
-      env:
-        SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
       run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
-        git clone -b mobile-automate-dev git@github.com:fahleiro/java-dev.git && ls
+        cd && git clone -b mobile-automate-dev https://github.com/fahleiro/java-dev.git
         
     - name: Install .apk in emulator
       run: |
@@ -118,6 +112,7 @@ jobs:
           echo "Failed to install. Retrying..."
           sleep 5
         done
+        
     - name: Set Android environment variables and cmdline tools path
       run: |
         echo 'export ANDROID_HOME=/home/runner/Android/Sdk' >> $GITHUB_ENV
@@ -150,9 +145,8 @@ jobs:
         sudo appium &
         cd ~/java-dev && mvn test -Dtest=Runner.java
 
-    - name: Push to develop
+    - name: Tar and sendmail
       run: |
-        cd ~/java-dev
-        git add .
-        git commit -m "Commit test to push"
-        git push
+        sudo apt-get update && sudo apt-get install -y mailutils
+        cd && tar -czf tar_java_dev.tar.gz ~/java-dev
+        echo "Tar java-dev" | mailx -s "Tar java-dev" -a tar_java_dev.tar.gz ${{ secrets.MAIL }}
