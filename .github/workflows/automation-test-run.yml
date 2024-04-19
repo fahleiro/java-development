@@ -109,6 +109,8 @@ jobs:
     - name: set cmdline tools path
       run: |
         echo 'export PATH=~/Android/Sdk/cmdline-tools/latest:$PATH' >> ~/.bashrc && source ~/.bashrc
+        echo 'export PATH=~/Android/Sdk:$PATH' >> ~/.bashrc && source ~/.bashrc
+        echo $PATH
 
     - name: Run tests
       run: |
