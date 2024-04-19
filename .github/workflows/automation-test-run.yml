@@ -10,8 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      ANDROID_HOME: ~/Android/Sdk
-      ANDROID_SDK_ROOT: ~/Android/Sdk
+      ANDROID_HOME: /home/runner/Android/Sdk
+      ANDROID_SDK_ROOT: /home/runner/Android/Sdk
       ANDROID_AVD_HOME: /home/runner/.config/.android/avd/
 
     steps:  
