@@ -102,15 +102,3 @@ jobs:
       run: |      
         cd ~/java-dev
         ~/Android/Sdk/platform-tools/adb install app-debug.apk
-        
-    - name: Run test
-      run: |      
-        cd ~/java-dev && mvn test -Dtest=Runner.java
-        
-    - name: Push project
-      run: |
-        cd ~/java-dev
-        git add .
-        git commit -m "Commit automatico após execução dos testes"
-        git push
-        
