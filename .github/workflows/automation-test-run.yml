@@ -124,6 +124,7 @@ jobs:
       run: |
         source ~/.bashrc
         chmod +x ~/Android/Sdk
+        sudo appium &
         cd ~/java-dev && mvn test -Dtest=Runner.java
 
     
