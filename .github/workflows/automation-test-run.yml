@@ -112,7 +112,8 @@ jobs:
             
     - name: Git clone
       run: |      
-        cd && git clone -b mobile-automate-dev git@github.com:fahleiro/java-dev.git && ls
+        cd && GIT_SSH_COMMAND="ssh -i /home/runner/.ssh/id_rsa" git clone -b mobile-automate-dev git@github.com:fahleiro/java-dev.git && ls
+
         
     - name: Install .apk in emulator
       run: |
