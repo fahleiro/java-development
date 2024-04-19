@@ -117,6 +117,9 @@ jobs:
     - name: Check Android SDK path
       run: ls ~/Android/Sdk
 
+    - name: echo path
+      run: echo $PATH
+
     - name: Run tests
       run: |
         source ~/.bashrc
