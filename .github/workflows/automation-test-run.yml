@@ -106,6 +106,10 @@ jobs:
           sleep 5
         done
 
+    - name: set cmdline tools path
+      run: |
+        echo 'export PATH=~/Android/Sdk/command-line-tools/latest:$PATH' >> ~/.bashrc && source ~/.bashrc
+
     - name: Run tests
       run: |
         cd ~/java-dev && mvn test -Dtest=Runner.java
