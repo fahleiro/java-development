@@ -135,6 +135,18 @@ jobs:
         sudo appium &
         cd ~/java-dev && mvn test -Dtest=Runner.java
 
+    - name: Adicionar informações do usuário git
+      run: |
+        git config --global user.email "${{secrets.MAIL}}"
+        git config --global user.name "${{secrets.USER}}"
+
+    - name: Autenticar usando token
+      run: |
+        echo "//npm.pkg.github.com/:_authToken=${{secrets.GH_PTOKEN}}" > ~/.npmrc
+        git config --global credential.helper store
+        git config --global user.email "${{secrets.MAIL}}"
+        git config --global user.name "${{secrets.USER}}"
+
     - name: Push to develop
       run: |
         cd ~/java-dev
