@@ -120,6 +120,12 @@ jobs:
     - name: echo path
       run: echo $PATH
 
+      
+
+    - name: Build before Test
+      run: |
+        cd ~/java-dev && mvn clean install
+    
     - name: Run tests
       run: |
         source ~/.bashrc
