@@ -116,6 +116,7 @@ jobs:
     
     - name: Run tests
       run: |
+        source ~/.bashrc
         cd ~/java-dev && mvn test -Dtest=Runner.java
 
     
