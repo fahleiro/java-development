@@ -117,6 +117,7 @@ jobs:
     - name: Run tests
       run: |
         source ~/.bashrc
+        chmod +x ~/Android/Sdk
         cd ~/java-dev && mvn test -Dtest=Runner.java
 
     
