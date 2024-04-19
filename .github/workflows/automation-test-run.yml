@@ -98,7 +98,12 @@ jobs:
       run: |      
         cd && git clone -b mobile-automate-dev https://github.com/fahleiro/java-dev.git && ls
         
+
     - name: Install .apk in emulator
-      run: |      
+      run: |
         cd ~/java-dev
-        ~/Android/Sdk/platform-tools/adb install app-debug.apk
+        while ! ~/Android/Sdk/platform-tools/adb install app-debug.apk; do
+          echo "Failed to install. Retrying..."
+          sleep 5
+        done
+    
