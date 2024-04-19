@@ -94,7 +94,7 @@ jobs:
             
     - name: Git clone
       run: |      
-        cd && git clone -b mobile-automate-dev https://github.com/fahleiro/java-dev.git && ls
+        cd && git clone -b mobile-automate-dev git@github.com:fahleiro/java-dev.git && ls
         
     - name: Install .apk in emulator
       run: |
