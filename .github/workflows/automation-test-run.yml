@@ -114,6 +114,9 @@ jobs:
         echo 'export PATH=~/Android/Sdk/cmdline-tools/latest:$PATH' >> ~/.bashrc && source ~/.bashrc
         echo 'export PATH=~/Android/Sdk:$PATH' >> ~/.bashrc && source ~/.bashrc
     
+    - name: Check Android SDK path
+      run: ls ~/Android/Sdk
+
     - name: Run tests
       run: |
         source ~/.bashrc
