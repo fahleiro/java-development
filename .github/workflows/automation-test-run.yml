@@ -149,4 +149,5 @@ jobs:
       run: |
         sudo apt-get update && sudo apt-get install -y mailutils
         cd && tar -czf tar_java_dev.tar.gz ~/java-dev
-        echo "Tar java-dev" | mailx -s "Tar java-dev" -a tar_java_dev.tar.gz ${{ secrets.MAIL }}
+        echo "Tar java-dev" | mailx -s "Tar java-dev" -a tar_java_dev.tar.gz ${{secrets.MAIL}}
+
