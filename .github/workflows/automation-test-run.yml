@@ -100,20 +100,16 @@ jobs:
                 </server>
               </servers>
             </settings>" > $HOME/.m2/settings.xml 
-
-    - name: Set up SSH KEY
-      run: |
-        mkdir -p /home/runner/.ssh
-        touch /home/runner/.ssh/id_rsa
-        echo "${{secrets.SSH_PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
-        chmod 600 /home/runner/.ssh/id_rsa
-        ssh-keyscan github.com >> /home/runner/.ssh/known_hosts
-        chmod 644 /home/runner/.ssh/known_hosts
             
     - name: Git clone
-      run: |      
-        cd && GIT_SSH_COMMAND="ssh -i /home/runner/.ssh/id_rsa" git clone -b mobile-automate-dev git@github.com:fahleiro/java-dev.git && ls
-
+      env:
+        SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        git clone -b mobile-automate-dev git@github.com:fahleiro/java-dev.git && ls
         
     - name: Install .apk in emulator
       run: |
