@@ -108,20 +108,25 @@ jobs:
 
     - name: Set Android environment variables and cmdline tools path
       run: |
-        echo 'export ANDROID_HOME=$HOME/Android/Sdk' >> $GITHUB_ENV
-        echo 'export ANDROID_SDK_ROOT=$HOME/Android/Sdk' >> $GITHUB_ENV
-        echo 'export PATH=$HOME/Android/Sdk/cmdline-tools/latest:$HOME/Android/Sdk:$HOME/Android/Sdk/tools:$HOME/Android/Sdk/tools/bin:$HOME/Android/Sdk/platform-tools:$PATH' >> $GITHUB_ENV
-        echo 'export PATH=$HOME/Android/Sdk/cmdline-tools/latest:$PATH' >> ~/.bashrc && source ~/.bashrc
-        echo 'export PATH=$HOME/Android/Sdk:$PATH' >> ~/.bashrc && source ~/.bashrc
+        echo 'export ANDROID_HOME=/home/runner/Android/Sdk' >> $GITHUB_ENV
+        echo 'export ANDROID_SDK_ROOT=/home/runner/Android/Sdk' >> $GITHUB_ENV
+        echo 'export PATH=/home/runner/Android/Sdk/cmdline-tools/latest:/home/runner/Android/Sdk/tools:/home/runner/Android/Sdk/platform-tools:$PATH' >> $GITHUB_ENV
+        source $HOME/.bashrc
     
     - name: Check Android SDK path
-      run: ls ~/Android/Sdk
+      run: ls /home/runner/Android/Sdk
 
+    - name: List Android environment variables
+      run: |
+        echo "ANDROID_HOME: $ANDROID_HOME"
+        echo "ANDROID_SDK_ROOT: $ANDROID_SDK_ROOT"
+        echo "PATH: $PATH"
+        echo "ANDROID_AVD_HOME: $ANDROID_AVD_HOME"
+        ls -d /home/runner/Android/Sdk
+  
     - name: echo path
       run: echo $PATH
-
       
-
     - name: Build before Test
       run: |
         cd ~/java-dev && mvn clean install
