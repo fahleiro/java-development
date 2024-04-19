@@ -78,7 +78,6 @@ jobs:
         done
         echo "Emulator is online!"
         echo "$status"
-
       #specifies about project
 
     - name: Set up settings.xml
@@ -97,7 +96,6 @@ jobs:
       run: |      
         cd && git clone -b mobile-automate-dev https://github.com/fahleiro/java-dev.git && ls
         
-
     - name: Install .apk in emulator
       run: |
         cd ~/java-dev
@@ -105,7 +103,6 @@ jobs:
           echo "Failed to install. Retrying..."
           sleep 5
         done
-
     - name: Set Android environment variables and cmdline tools path
       run: |
         echo 'export ANDROID_HOME=/home/runner/Android/Sdk' >> $GITHUB_ENV
@@ -137,14 +134,3 @@ jobs:
         chmod +x ~/Android/Sdk
         sudo appium &
         cd ~/java-dev && mvn test -Dtest=Runner.java
-
-    - name: Build before Test
-      run: |
-        cd ~/java-dev
-        git add .
-        git commit -m "Commit test after Run Workflow"
-        git push
-
-        
-
-    
