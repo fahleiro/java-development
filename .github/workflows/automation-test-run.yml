@@ -144,12 +144,3 @@ jobs:
         chmod +x ~/Android/Sdk
         sudo appium &
         cd ~/java-dev && mvn test -Dtest=Runner.java
-
-    - name: Install Mutt
-      run: sudo apt-get update && sudo apt-get install -y mutt
-    
-    - name: Tar and sendmail
-      run: |
-        cd && tar -czf tar_java_dev.tar.gz ~/java-dev
-        echo "Tar java-dev" | mutt -s "Tar java-dev" -a /home/runner/tar_java_dev.tar.gz -- ${{secrets.MAIL}}
-
