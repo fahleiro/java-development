@@ -108,11 +108,11 @@ jobs:
 
     - name: Set Android environment variables and cmdline tools path
       run: |
-        echo 'export ANDROID_HOME=~/Android/Sdk' >> $GITHUB_ENV
-        echo 'export ANDROID_SDK_ROOT=~/Android/Sdk' >> $GITHUB_ENV
-        echo 'export PATH=~/Android/Sdk/cmdline-tools/latest:~/Android/Sdk:~/Android/Sdk/tools:~/Android/Sdk/tools/bin:~/Android/Sdk/platform-tools:$PATH' >> $GITHUB_ENV
-        echo 'export PATH=~/Android/Sdk/cmdline-tools/latest:$PATH' >> ~/.bashrc && source ~/.bashrc
-        echo 'export PATH=~/Android/Sdk:$PATH' >> ~/.bashrc && source ~/.bashrc
+        echo 'export ANDROID_HOME=$HOME/Android/Sdk' >> $GITHUB_ENV
+        echo 'export ANDROID_SDK_ROOT=$HOME/Android/Sdk' >> $GITHUB_ENV
+        echo 'export PATH=$HOME/Android/Sdk/cmdline-tools/latest:$HOME/Android/Sdk:$HOME/Android/Sdk/tools:$HOME/Android/Sdk/tools/bin:$HOME/Android/Sdk/platform-tools:$PATH' >> $GITHUB_ENV
+        echo 'export PATH=$HOME/Android/Sdk/cmdline-tools/latest:$PATH' >> ~/.bashrc && source ~/.bashrc
+        echo 'export PATH=$HOME/Android/Sdk:$PATH' >> ~/.bashrc && source ~/.bashrc
     
     - name: Check Android SDK path
       run: ls ~/Android/Sdk
