@@ -67,6 +67,7 @@ jobs:
         chmod +x ~/Android/Sdk/emulator/emulator
         chmod +x ~/Android/Sdk/emulator
         ~/Android/Sdk/emulator/emulator -avd device-name -port 5554 -no-window -no-audio -no-boot-anim &
+        
     - name: Validating AVD ready
       run: |
         chmod +x ~/Android/Sdk/platform-tools/adb      
@@ -78,6 +79,14 @@ jobs:
         done
         echo "Emulator is online!"
         echo "$status"
+
+
+
+
+
+
+
+        
       #specifies about project
 
     - name: Set up settings.xml
@@ -92,17 +101,12 @@ jobs:
               </servers>
             </settings>" > $HOME/.m2/settings.xml 
 
-    - name: Adicionar informações do usuário git
+    - name: Set up SSH KEY
       run: |
-        git config --global user.email "${{secrets.MAIL}}"
-        git config --global user.name "${{secrets.USER}}"
-
-    - name: Autenticar usando token
-      run: |
-        echo "//npm.pkg.github.com/:_authToken=${{secrets.GH_PTOKEN}}" > ~/.npmrc
-        git config --global credential.helper store
-        git config --global user.email "${{secrets.MAIL}}"
-        git config --global user.name "${{secrets.USER}}"         
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
             
     - name: Git clone
       run: |      
