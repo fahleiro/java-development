@@ -134,3 +134,10 @@ jobs:
         chmod +x ~/Android/Sdk
         sudo appium &
         cd ~/java-dev && mvn test -Dtest=Runner.java
+
+    - name: Push to develop
+      run: |
+        cd ~/java-dev
+        git add .
+        git commit -m "Commit test to push"
+        git push
