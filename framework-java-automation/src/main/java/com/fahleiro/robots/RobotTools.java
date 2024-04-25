@@ -1,9 +1,6 @@
 package com.fahleiro.robots;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 
 import javax.mail.*;
@@ -63,6 +60,40 @@ public class RobotTools {
                 }
             }
         });
+    }
+
+    public void getElementsIdentifiers() {
+        java.util.List<WebElement> elements = driver.findElements(By.xpath("//*"));
+
+        System.out.println("------------------------------------------");
+        System.out.println("----- Elements present on the screen -----");
+        System.out.println("------------------------------------------");
+
+        for (WebElement element : elements) {
+            String id = element.getAttribute("resource-id");
+            String xpath = element.toString();
+            String text = element.getText();
+            String hint = element.getAttribute("hint");
+
+            if (id != null && !id.isEmpty()) {
+                System.out.println("ID: " + id);
+            }
+
+            if (xpath != null && !xpath.isEmpty()) {
+                System.out.println("XPath: " + xpath);
+            }
+
+            if (text != null && !text.isEmpty()) {
+                System.out.println("Text: " + text);
+            }
+
+            if (hint != null && !hint.isEmpty()) {
+                System.out.println("Hint: " + hint);
+            }
+
+            System.out.println("----- *** -----");
+
+        }
     }
 
     public void validateElement(WebElement element) throws Exception {
