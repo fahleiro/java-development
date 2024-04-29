@@ -21,7 +21,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.Properties;
 import java.util.function.Function;
 import java.util.zip.ZipOutputStream;
@@ -297,5 +299,15 @@ public class RobotTools {
             System.err.println("Error sending the request: " + e.getMessage());
         }
     }
+
+    public static String getCurrentDate() {
+        Date currentDate = new Date();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String formattedDate = sdf.format(currentDate);
+
+        return formattedDate;
+    }
+
 
 }
