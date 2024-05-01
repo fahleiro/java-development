@@ -309,5 +309,11 @@ public class RobotTools {
         return formattedDate;
     }
 
+    public void navigateBack(WebElement element) {
+        while (!element.isDisplayed ()) {
+            driver.navigate().back();
+        }
+    }
+
 
 }
