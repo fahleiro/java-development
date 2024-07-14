@@ -23,9 +23,22 @@ public class Interactions extends Page {
         robots.takeScreenShot (failenamess, pathss );
     }
 
+    
+    private void printVisibleElements() {
+        List<WebElement> allElements = driver.findElements(By.xpath("//*"));
+        for (WebElement element : allElements) {
+            if (element.isDisplayed()) {
+                System.out.println("Elemento visível: " + element.getTagName());
+                // Você pode adicionar mais informações do elemento aqui, se necessário
+            }
+        }
+    }
+
+    
     public void setPasswordInteraction(String pass, String failenamess, String pathss) throws InterruptedException {
         robots.setText(passwordLabel, pass);
         robots.takeScreenShot (failenamess, pathss );
+        printVisibleElements();
     }
 
     public void btLoginClick(String failenamess, String pathss)  throws InterruptedException{
