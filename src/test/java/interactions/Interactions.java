@@ -7,6 +7,8 @@ import org.openqa.selenium.Alert;
 import pages.Page;
 import org.openqa.selenium.support.PageFactory;
 import java.sql.SQLException;
+import org.openqa.selenium.WebElement;
+import java.util.List;
 
 import static tests.Hooks.driver;
 import static utils.BuildTools.robots;
