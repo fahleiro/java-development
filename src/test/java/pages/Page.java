@@ -8,7 +8,10 @@ public class Page {
     @AndroidFindBy(xpath = "//android.view.View/android.widget.EditText[1]")
     public WebElement usernameLabel;
 
-    @AndroidFindBy(accessibility = "//android.view.View/android.widget.EditText[2]")
+    @AndroidFindBy(xpath = "//android.view.View/android.widget.EditText[2]")
     public WebElement passwordLabel;
+
+    @AndroidFindBy(xpath = "//android.widget.Button[@text=\"Login\"]")
+    public WebElement loginButton;
 
 }
