@@ -23,6 +23,8 @@ public class Interactions extends Page {
     public void setUserInteraction(String user, String failenamess, String pathss) throws InterruptedException {
         robots.setText(usernameLabel, user);
         robots.takeScreenShot (failenamess, pathss );
+        Thread.sleep(10000);
+
     }
     
     public void setPasswordInteraction(String pass, String failenamess, String pathss) throws InterruptedException {
