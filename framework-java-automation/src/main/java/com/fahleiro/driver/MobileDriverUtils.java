@@ -1,6 +1,6 @@
 package com.fahleiro.driver;
 
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
@@ -15,9 +15,8 @@ import java.time.Duration;
 public class MobileDriverUtils {
 
     private static AppiumDriverLocalService appiumService;
-    public static AppiumDriver driver;
+    public static AndroidDriver driver;
     private static String redirectAppiumPortVar;
-
 
     private static boolean isPortInUse(String ip, int port) {
         try {
@@ -47,8 +46,8 @@ public class MobileDriverUtils {
             ipAddress = appiumServerIp[0];
         }
 
-        boolean portInUse = isPortInUse(ipAddress , appiumServerPort);
-        if (redirectAppiumPort){
+        boolean portInUse = isPortInUse(ipAddress, appiumServerPort);
+        if (redirectAppiumPort) {
             redirectAppiumPortVar = "Y";
         } else {
             redirectAppiumPortVar = "N";
@@ -57,7 +56,7 @@ public class MobileDriverUtils {
             System.out.println("The port " + appiumServerPort + " is in use or inaccessible.");
             System.out.println("Port redirection active? " + redirectAppiumPortVar);
             if (redirectAppiumPort) {
-                int newPort = findAvailablePort(ipAddress , appiumServerPort);
+                int newPort = findAvailablePort(ipAddress, appiumServerPort);
                 if (newPort != -1) {
                     System.out.println("Redirecting to alternate port: " + newPort);
                     appiumServerPort = newPort;
@@ -70,24 +69,23 @@ public class MobileDriverUtils {
             System.out.println("The port " + appiumServerPort + " is available for use.");
         }
 
-
-        AppiumServiceBuilder appiumServiceBuilderbuilder = new AppiumServiceBuilder()
+        AppiumServiceBuilder appiumServiceBuilder = new AppiumServiceBuilder()
                 .usingPort(appiumServerPort)
                 .withIPAddress(ipAddress);
 
         if (detailedErrors) {
-            appiumServiceBuilderbuilder.withArgument(GeneralServerFlag.LOG_LEVEL, "debug");
+            appiumServiceBuilder.withArgument(GeneralServerFlag.LOG_LEVEL, "debug");
         } else {
-            appiumServiceBuilderbuilder.withArgument(GeneralServerFlag.LOG_LEVEL, "error");
+            appiumServiceBuilder.withArgument(GeneralServerFlag.LOG_LEVEL, "error");
         }
 
-        appiumService = AppiumDriverLocalService.buildService(appiumServiceBuilderbuilder);
+        appiumService = AppiumDriverLocalService.buildService(appiumServiceBuilder);
 
         try {
             InetAddress localHost = InetAddress.getLocalHost();
             String localIpAddress = localHost.getHostAddress();
 
-            if (ipAddress .equals(localIpAddress)) {
+            if (ipAddress.equals(localIpAddress)) {
                 System.out.println("Local IP address provided, starting server");
                 appiumService.start();
             } else {
@@ -97,9 +95,8 @@ public class MobileDriverUtils {
             e.printStackTrace();
         }
 
-        driver = new AppiumDriver(appiumService.getUrl(), capabilities);
+        driver = new AndroidDriver(appiumService.getUrl(), capabilities); // Alterado para AndroidDriver
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-
 
         String finalAppiumUrl = appiumService.getUrl().toString();
         System.out.println("Appium session started successfully at: " + finalAppiumUrl);

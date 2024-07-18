@@ -309,7 +309,7 @@ public class RobotTools {
         return formattedDate;
     }
 
-    public void navigateBack(WebElement element) {
+    public void navigateBackgit(WebElement element) {
         while (!element.isDisplayed ()) {
             driver.navigate().back();
         }
