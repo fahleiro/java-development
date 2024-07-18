@@ -2,6 +2,8 @@ package interactions;
 
 import DAO.Queries.Query;
 
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.Alert;
 import pages.Page;
@@ -20,19 +22,16 @@ public class Interactions extends Page {
         PageFactory.initElements(new AppiumFieldDecorator (driver), this);
     }
 
-    public void setUserInteraction(String user, String failenamess, String pathss) throws InterruptedException {
+    public void setUserInteraction(String user) throws InterruptedException {
         robots.setText(usernameLabel, user);
-        robots.takeScreenShot (failenamess, pathss );
-        Thread.sleep(10000);
-
+        Thread.sleep (10000);
     }
     
-    public void setPasswordInteraction(String pass, String failenamess, String pathss) throws InterruptedException {
+    public void setPasswordInteraction(String pass) throws InterruptedException {
         robots.setText(passwordLabel, pass);
-        robots.takeScreenShot (failenamess, pathss );
     }
 
-    public void btLoginClick(String failenamess, String pathss)  throws InterruptedException{
+    public void btLoginClick(){
         robots.clickElement(loginButton);
         try {
             Alert alert = driver.switchTo().alert();
@@ -40,7 +39,6 @@ public class Interactions extends Page {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        robots.takeScreenShot (failenamess, pathss );
     }
 
 

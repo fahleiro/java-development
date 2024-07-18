@@ -17,7 +17,7 @@ public class Appium {
         caps.setCapability("appActivity", "fahleiro.apk.tests.MainActivity");
         caps.setCapability("automationName", "UiAutomator2");
         caps.setCapability("newCommandTimeout", "14400");
-        caps.setCapability("noReset", true);
+        caps.setCapability("noReset", false);
 
         return caps;
     }

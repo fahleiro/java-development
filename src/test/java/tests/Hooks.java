@@ -3,10 +3,14 @@ package tests;
 import com.fahleiro.driver.MobileDriverTools;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
 import static utils.Appium.*;
@@ -24,23 +28,36 @@ public class Hooks {
         extent2.createExtentReport("Report.html", directoryExtentCriado);
         System.out.println("Log to registry start of execution @BeforeSuite");
 
-        // Iniciar a gravação de tela
-        driverTools.startScreenRecording(driver);
 
+    }
+
+@BeforeTest
+public static void beforeTest(){
+
+    // Iniciar a gravação de tela
+    driverTools.startScreenRecording(driver);
+
+}
+
+    @AfterTest
+    public static void afterTest() {
+        // Gerar o nome do vídeo com base no horário atual
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH-mm-ss");
+        String videoName = LocalTime.now().format(formatter) + ".mp4";
+        String pathToSaveVideo = "src/test/report/evidence";
+
+        // Parar a gravação de tela e salvar o vídeo
+        String videoPath = driverTools.stopScreenRecording(driver, videoName, pathToSaveVideo);
+        if (videoPath != null) {
+            System.out.println("Video saved at: " + videoPath);
+        } else {
+            System.out.println("No video was recorded.");
+        }
     }
 
     @AfterSuite
     public static void after() {
-        // Parar a gravação de tela e salvar o vídeo
-        String videoBase64 = driverTools.stopScreenRecording(driver);
-        if (videoBase64 != null && !videoBase64.isEmpty()) {
-            byte[] videoBytes = Base64.getDecoder().decode(videoBase64);
-            try (FileOutputStream fos = new FileOutputStream("src/test/report/screenRecording.mp4")) {
-                fos.write(videoBytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
 
         MobileDriverTools.stopAppium();
         extent2.flushExtentReport();
