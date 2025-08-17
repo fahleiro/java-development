@@ -28,7 +28,7 @@ jobs:
       run: |
         sudo apt-get install cpu-checker
         sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
-        sudo apt-get install -y libvulkan1 libx11-6 libasound2 libgl1-mesa-glx libglu1-mesa
+        sudo apt-get install -y libvulkan1 libx11-6 libasound2t64 libgl1-mesa-dri libglu1-mesa libxext6 libxrender1
     - name: Set chmod kvm
       run: |      
        sudo chmod o+rw /dev/kvm    
