@@ -24,10 +24,11 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
 
-    - name: Install KVM on Linux
+    - name: Install KVM and Emulator Dependencies
       run: |
         sudo apt-get install cpu-checker
         sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+        sudo apt-get install -y libvulkan1 libx11-6 libasound2 libgl1-mesa-glx libglu1-mesa
     - name: Set chmod kvm
       run: |      
        sudo chmod o+rw /dev/kvm    
@@ -66,19 +67,15 @@ jobs:
       run: |
         chmod +x ~/Android/Sdk/emulator/emulator
         chmod +x ~/Android/Sdk/emulator
-        ~/Android/Sdk/emulator/emulator -avd device-name -port 5554 -no-window -no-audio -no-boot-anim &
+        ~/Android/Sdk/emulator/emulator -avd device-name -port 5554 -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none &
         
     - name: Validating AVD ready
       run: |
         chmod +x ~/Android/Sdk/platform-tools/adb      
-        status=$(~/Android/Sdk/platform-tools/adb devices | grep -v "List of devices attached")
-        while ! echo "$status" | grep -q "device"; do
-          echo "Emulator is not ready, waiting..."
-          sleep 5
-          status=$(~/Android/Sdk/platform-tools/adb devices | grep -v "List of devices attached")
-        done
-        echo "Emulator is online!"
-        echo "$status"
+        ~/Android/Sdk/platform-tools/adb wait-for-device
+        ~/Android/Sdk/platform-tools/adb shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
+        echo "Emulator is fully booted and ready!"
+        ~/Android/Sdk/platform-tools/adb devices
 
 
 
@@ -138,9 +135,12 @@ jobs:
       run: |
         cd ~/java-dev && mvn clean install
     
+    - name: Start Appium Server
+      run: |
+        appium --port 4723 --log-level info &
+        sleep 10
+        
     - name: Run tests
       run: |
-        source ~/.bashrc
-        chmod +x ~/Android/Sdk
-        sudo appium &
         cd ~/java-dev && mvn test -Dtest=Runner.java
+      timeout-minutes: 30
